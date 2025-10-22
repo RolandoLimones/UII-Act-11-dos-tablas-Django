@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ proveedor.nombre }} | Melodías{% endblock %}
+
+{% block contenido %}
+<article class="proveedor-detail">
+    <div class="proveedor-banner">
+{% if proveedor.foto %}
+            <img src="{{ proveedor.foto.url }}" alt="Foto de {{ proveedor.nombre_proveedor }}" class="detail-photo">
+        {% else %}
+            <div class="detail-placeholder">🏪</div>
+        {% endif %}
+        <div class="proveedor-info">
+            <h1>{{ proveedor.nombre_proveedor }}</h1>
+            <h3>Teléfono: {{proveedor.telefono}}<h3>
+            <h3>Email: {{proveedor.email}}<h3>
+            <h3>Dirección: {{ proveedor.direccion }}</h3>
+            <h3>Dias que entrega: {{proveedor.dias_entrega}}</h3>
+        </div>
+    </div>
+
+    <div class="detail-actions">
+        <a href="{% url 'app_proveedor:editar_proveedor' proveedor.id %}" class="btn btn-secondary">✏️ Editar</a>
+        <a href="{% url 'app_proveedor:borrar_proveedor' proveedor.id %}" class="btn btn-danger">🗑️ Borrar</a>
+    </div>
+
+    <section class="productos-section">
+        <h2>Productos</h2>
+        {% if proveedor.productos.all %}
+        <ul class="product-list">
+            {% for producto in proveedor.productos.all %}
+            <li><strong>{{ producto.nombre_producto }}</strong> 
+                <span></span>
+                <span>Cantidad:{{ producto.cantidad }}</span> 
+                <span>Precio:${{ producto.precio }} </span>
+                <span>Almacen:{{ producto.almacen_id }}</span>
+                <span>Foto: <img src="{{ producto.foto.url }}" alt="Foto de {{ producto.nombre_producto }}" class="img-p"></span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-message">Este proveedor no tiene productos registrados.</p>
+        {% endif %}
+    </section>
+</article>
+{% endblock %}

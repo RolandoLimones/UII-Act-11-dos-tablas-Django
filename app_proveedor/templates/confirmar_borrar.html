@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block titulo %}Eliminar Proveedor | Sistema de Proveedores{% endblock %}
+
+{% block contenido %}
+<h2>¿Estás seguro de que quieres borrar a "{{ proveedor.nombre_proveedor }}"?</h2>
+<p>Esta acción no se puede deshacer.</p>
+<form method="post">
+    {% csrf_token %}
+    <div class="actions">
+        <button type="submit" class="btn btn-danger">Sí, Borrar</button>
+        <a href="{% url 'app_proveedor:detalle_proveedor' proveedor.id %}" class="btn">Cancelar</a>
+    </div>
+</form>
+{% endblock %}
